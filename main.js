@@ -1,13 +1,24 @@
 // Aplikasi Redux
+import { configureStore } from '@reduxjs/toolkit';
 
 // Reduser(state, action)
-function counter(state = 0, action) {
+const initialState = {
+  value: 0
+};
+
+function counter(state = initialState, action) {
   switch (action.type) {
     case "INCREMENT":
-      return state + 1;
+      return {
+        ...state,
+        value: state.value + 1
+      };
       break;
-    case "DICREMENT":
-      return state - 1;
+    case "DECREMENT":
+      return {
+        ...state,
+        value: state.value - 1
+      };
       break;
     default:
       return state;
@@ -15,12 +26,17 @@ function counter(state = 0, action) {
 }
 
 // Store(reduser)
-const store = Redux.createStore(counter);
+const store = configureStore({ reducer: counter });
+
+// Selectors
+const selectCounterValue = (state) => state.value;
 
 // Subscribe
 store.subscribe(() => {
-  console.log("State saat ini " + store.getState());
+  console.dir("State saat ini " + selectCounterValue(store.getState()));
 });
 
 // Action
 store.dispatch({ type: "INCREMENT" });
+store.dispatch({ type: "INCREMENT" });
+store.dispatch({ type: "DECREMENT" });
