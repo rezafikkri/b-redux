@@ -1,27 +1,23 @@
-import { Component } from "react";
+import { useDispatch } from 'react-redux';
+import { addTodo } from "./todosSlice";
 
-export default class AddTodo extends Component {
-  constructor(props) {
-    super(props);
-    this.textInput = null;
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+export default function AddTodo() {
+  const dispatch = useDispatch();
+  let textInput;
 
-  handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     
-    if (!this.textInput.value.trim()) return;
+    if (!textInput.value.trim()) return;
 
-    this.props.addTodo(this.textInput.value);
+    dispatch(addTodo(textInput.value));
     e.target.reset();
   }
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" ref={element => this.textInput = element}/>
-        <button type="submit">Add todo</button>
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" ref={element => textInput = element}/>
+      <button type="submit">Add todo</button>
+    </form>
+  );
 }

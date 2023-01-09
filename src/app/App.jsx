@@ -1,6 +1,6 @@
-import Todos from "../features/todos/todosContainer";
-import AddTodo from "../features/todos/addTodoContainer";
-import Footer from "../features/filters/footerContainer";
+import Todos from "../features/todos/Todos";
+import AddTodo from "../features/todos/AddTodo";
+import Footer from "../features/filters/Footer";
 
 export default function App(props) {
   return (
