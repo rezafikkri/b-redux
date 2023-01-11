@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useGetTodosQuery } from '../services/todos';
+import { useGetTodosQuery, useToggleTodoMutation } from '../services/todos';
 import Todo from "./Todo";
 
 export default function Todos() {
   const filter = useSelector((state => state.filters.value));
   const { data: todos, error, isLoading, isFetching } = useGetTodosQuery(filter);
+  const [ toggleTodo, result ] = useToggleTodoMutation();
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +17,9 @@ export default function Todos() {
     ) : isFetching ? (
       <>Featching...</>
     ) : todos ?
-      todos.map((todo) => <Todo key={todo.id} {...todo} onClick={() => dispatch(toggleTodo(todo.id))}/>)
+      todos.map((todo) => 
+        <Todo key={todo.id} {...todo} onClick={() => toggleTodo({id: todo.id, completed: !todo.completed})}/>
+      )
     : null}
     </ul>
   );
